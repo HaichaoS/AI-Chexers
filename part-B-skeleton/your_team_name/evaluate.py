@@ -1,4 +1,5 @@
-NEIGHBOR = [[1, -1], [0, -1], [-1, 0], [1, 0], [-1, 1], [0, 1]]
+from your_team_name.State import *
+
 COLOURS = ["red", "green", "blue"]
 
 
@@ -32,9 +33,10 @@ def evaluate(state, colour):
         enemy_pieces = state.pieces + state.enemy1_pieces
 
     pieces_distance = heuristic(pieces, state.desti_dic[colour])
-    enemy_avoid = avoid(pieces, enemy_pieces)
     eat = eater(pieces, enemy_pieces)
-    value = (-pieces_distance/10) + (eat*4)
+    print("pieces length:", eat)
+    print("pieces_distance", pieces_distance)
+    value = eat + state.exit_value - (pieces_distance/10)
     return value
 
 

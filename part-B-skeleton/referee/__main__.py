@@ -71,7 +71,10 @@ def play(players, options, out):
     # (starting with Red as the current player, then alternating):
     curr_player, next_player, prev_player = players
     while not game.over():
-        time.sleep(options.delay)
+        if options.delay == -1:
+            input()
+        else:
+            time.sleep(options.delay)
         out.section(f"{curr_player.name}'s turn")
 
         # Ask the current player for their next action (calling their .action() 

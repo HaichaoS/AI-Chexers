@@ -1,5 +1,6 @@
 from your_team_name.State import State
 from your_team_name.Maxn import Maxn
+from your_team_name.evaluate import heuristic
 
 start_dic = {
     "red": [[-3, 0], [-3, 1], [-3, 2],[-3, 3]],
@@ -20,7 +21,13 @@ start_action_dic = {
               ("MOVE", ((0, -3), (0, -2)))],
     "blue": [("MOVE", ((0, 3), (0, 2))),
               ("MOVE", ((0, 2), (1, 1))),
-              ("MOVE", ((3, 0), (2, 0)))]}
+              ("MOVE", ((3, 0), (2, 0)))]
+}
+defend_dic = {
+    "red": [[3, -3], [3, 0]],
+    "green": [[-3, 3], [0, 3]],
+    "blue": [[-3, 0], [0, -3]]
+}
 
 
 class ExamplePlayer:
@@ -67,6 +74,13 @@ class ExamplePlayer:
 
         if self.state.turn < 3:
             action = start_action(self.state, self.state.turn)
+
+        # elif (len(self.state.pieces) <= 2) and \
+        #     (self.state.exit_value + len(self.state.pieces) < 4):
+        #     if len(self.state.enemy1_pieces) > len(self.state.enemy2_pieces):
+        #         action = defend(self.state, self.state.enemy1_colour)
+        #     else:
+        #         action = defend(self.state, self.state.enemy2_colour)
 
         else:
             if len(self.state.pieces) == 0:
@@ -170,6 +184,12 @@ class ExamplePlayer:
             elif self.state.enemy2_colour == colour:
                 if exit in self.state.enemy2_pieces:
                     self.state.enemy2_pieces.remove(exit)
+
+    # def defend(self, state, target):
+    #     distance = heuristic(state.pieces, defend_dic[target])
+    #     if distance == 0:
+
+
 
 
 def find_jump_over(parent, kid):
