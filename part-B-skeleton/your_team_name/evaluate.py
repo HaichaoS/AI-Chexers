@@ -3,41 +3,64 @@ from your_team_name.State import *
 COLOURS = ["red", "green", "blue"]
 
 
-def evaluate_create(state, colour):
+class Evaluate:
 
-    values = {"red": None,
-              "green": None,
-              "blue": None}
-    value = evaluate(state, colour)
-    values[colour] = value
+    def __init__(self, colour, state):
+        self.colour = colour
+        self.state = state
+        self.eat_weight = 10
+        self.dist_weight = 0
+        self.enemy1_eat_weight = 0
+        self.enemy1_dist_weight = 0.1
+        self.enemy2_eat_weight = 0
+        self.enemy2_dist_weight = 0.1
 
-    return values
+    def evaluate_create(self, state, colour):
+        values = {"red": None,
+                  "green": None,
+                  "blue": None}
+        value = self.evaluate(state, colour)
+        values[colour] = value
+        return values
 
+    def evaluate_add(self, values, state, colour):
 
-def evaluate_add(values, state, colour):
+        value = self.evaluate(state, colour)
+        values[colour] = value
 
-    value = evaluate(state, colour)
-    values[colour] = value
+    def evaluate(self, state, colour):
 
+        if colour == state.colour:
+            value = self.evaluate_self(state, colour)
+        elif colour == state.enemy1_colour:
+            value = self.evaluate_enemy1(state, colour)
+        else:
+            value = self.evaluate_enemy2(state, colour)
+        return value
 
-def evaluate(state, colour):
-
-    if colour == state.colour:
+    def evaluate_self(self, state, colour):
         pieces = state.pieces
         enemy_pieces = state.enemy1_pieces + state.enemy2_pieces
-    elif colour == state.enemy1_colour:
+        pieces_distance = heuristic(pieces, state.desti_dic[colour])
+        eat = eater(pieces, enemy_pieces)
+        value = (eat + state.exit_value) * self.eat_weight - pieces_distance * self.dist_weight
+        return value
+
+    def evaluate_enemy1(self, state, colour):
         pieces = state.enemy1_pieces
         enemy_pieces = state.pieces + state.enemy2_pieces
-    else:
+        pieces_distance = heuristic(pieces, state.desti_dic[colour])
+        eat = eater(pieces, enemy_pieces)
+        value = (eat + state.exit_value) * self.enemy1_eat_weight - pieces_distance * self.enemy1_dist_weight
+        return value
+
+    def evaluate_enemy2(self, state, colour):
         pieces = state.enemy2_pieces
         enemy_pieces = state.pieces + state.enemy1_pieces
-
-    pieces_distance = heuristic(pieces, state.desti_dic[colour])
-    eat = eater(pieces, enemy_pieces)
-    print("pieces length:", eat)
-    print("pieces_distance", pieces_distance)
-    value = eat + state.exit_value - (pieces_distance/10)
-    return value
+        pieces_distance = heuristic(pieces, state.desti_dic[colour])
+        eat = eater(pieces, enemy_pieces)
+        value = (eat + state.exit_value) * self.enemy2_eat_weight - pieces_distance * self.enemy2_dist_weight
+        return value
 
 
 def heuristic(start, desti):
@@ -65,3 +88,5 @@ def avoid(mine, enemy):
 
 def eater(mine, enemy):
     return len(mine) - len(enemy)
+
+

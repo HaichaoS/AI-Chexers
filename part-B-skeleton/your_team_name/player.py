@@ -1,6 +1,5 @@
 from your_team_name.State import State
 from your_team_name.Maxn import Maxn
-from your_team_name.evaluate import heuristic
 
 start_dic = {
     "red": [[-3, 0], [-3, 1], [-3, 2],[-3, 3]],
@@ -184,12 +183,6 @@ class ExamplePlayer:
             elif self.state.enemy2_colour == colour:
                 if exit in self.state.enemy2_pieces:
                     self.state.enemy2_pieces.remove(exit)
-
-    # def defend(self, state, target):
-    #     distance = heuristic(state.pieces, defend_dic[target])
-    #     if distance == 0:
-
-
 
 
 def find_jump_over(parent, kid):
