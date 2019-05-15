@@ -11,6 +11,16 @@ desti_dic = {
     "blue": [[0, -3], [-1, -2], [-2, -1], [-3, 0]],
     "green": [[-3, 3], [-2, 3], [-1, 3], [0, 3]]
 }
+start_action_dic = {
+    "red": [("MOVE", ((-3, 0), (-2, 0))),
+            ("MOVE", ((-2, 0), (-2, 1))),
+            ("MOVE", ((-3, 3), (-2, 2)))],
+    "green": [("MOVE", ((3, -3), (2, -2))),
+              ("MOVE", ((2, -2), (1, -2))),
+              ("MOVE", ((0, -3), (0, -2)))],
+    "blue": [("MOVE", ((0, 3), (0, 2))),
+              ("MOVE", ((0, 2), (1, 1))),
+              ("MOVE", ((3, 0), (2, 0)))]}
 
 
 class ExamplePlayer:
@@ -27,8 +37,8 @@ class ExamplePlayer:
         """
         # TODO: Set up state representation.
         if colour == 'red':
-            enemy1 = 'blue'
-            enemy2 = 'green'
+            enemy1 = 'green'
+            enemy2 = 'blue'
         elif colour == 'blue':
             enemy1 = 'red'
             enemy2 = 'green'
@@ -40,7 +50,7 @@ class ExamplePlayer:
         self.state = state
         self.colour = colour
         self.past_state = None
-        self.maxn = Maxn(self.colour, 2, self.state)
+        self.maxn = Maxn(self.colour, 3, self.state)
 
     def action(self):
         """
@@ -55,17 +65,23 @@ class ExamplePlayer:
         """
         # TODO: Decide what action to take.
 
-        if len(self.state.pieces) == 0:
-            return ("PASS", None)
+        if self.state.turn < 3:
+            action = start_action(self.state, self.state.turn)
 
-        result, state = self.maxn.maxn(self.state, 2, self.colour, -float("inf"))
-        if state.action == "EXIT":
-            action = (state.action, tuple(state.before))
-        elif state.action == "MOVE" or state.action == "JUMP":
-            action = (state.action, (tuple(state.before), tuple(state.after)))
         else:
-            action = ("PASS", None)
+            if len(self.state.pieces) == 0:
+                return ("PASS", None)
+
+            result, state = self.maxn.maxn(self.state, 3, self.colour, -float("inf"))
+            if state.action == "EXIT":
+                action = (state.action, tuple(state.before))
+            elif state.action == "MOVE" or state.action == "JUMP":
+                action = (state.action, (tuple(state.before), tuple(state.after)))
+            else:
+                action = ("PASS", None)
+
         self.update(self.colour, action)
+        self.state.turn += 1
         return action
 
     def update(self, colour, action):
@@ -171,4 +187,11 @@ def find_jump_over(parent, kid):
         return [parent[0], parent[1] + 1]
     elif y == 2:
         return [parent[0], parent[1] - 1]
+
+
+def start_action(state, turn):
+
+    return start_action_dic[state.colour][turn]
+
+
 

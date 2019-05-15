@@ -1,5 +1,5 @@
 from your_team_name.State import State
-from your_team_name.evaluate import evaluate
+from your_team_name.evaluate import *
 
 NEIGHBOR = [[1, -1], [0, -1], [-1, 0], [1, 0], [-1, 1], [0, 1]]
 
@@ -17,11 +17,12 @@ class Maxn:
         curr_depth = depth
         curr_player = state.colour
 
-        result = evaluate(state)
+        result = evaluate_create(state, colour)
         # print(depth, colour, result)
         children = get_next_state(state)
 
         if (len(state.pieces) == 0) or (depth <= 0):
+            # lazy
             return result, state
 
         best = {"red": float("-inf"),
@@ -30,6 +31,8 @@ class Maxn:
 
         for child in children:
             result, next_state = self.maxn(child, curr_depth-1, next_colour(colour), best[colour])
+            if result[colour] is None:
+                evaluate_add(result, state, colour)
             if result[colour] > best[colour]:
                 best = result
                 if (curr_depth == self.depth) and (curr_player == self.colour):

@@ -17,6 +17,7 @@ class State:
         self.enemy1_desti = desti_dic[enemy1]
         self.enemy2_desti = desti_dic[enemy2]
         self.desti_dic = desti_dic
+        self.turn = 0
         self.parent = None
         self.before = None
         self.after = None
