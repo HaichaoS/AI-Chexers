@@ -8,8 +8,8 @@ class Evaluate:
     def __init__(self, colour, state):
         self.colour = colour
         self.state = state
-        self.eat_weight = 10
-        self.dist_weight = 0
+        self.eat_weight = 0.9
+        self.dist_weight = 0.1
         # self.enemy1_eat_weight = 0
         # self.enemy1_dist_weight = 0.1
         # self.enemy2_eat_weight = 0
@@ -35,7 +35,7 @@ class Evaluate:
         for key in state.pieces_dic.keys():
             if colour != key:
                 enemy_pieces += state.pieces_dic[key]
-        pieces_distance = heuristic(pieces, state.desti_dic[colour])
+        pieces_distance = heuristic(pieces, state.desti_dic[colour], state.exit_dic[colour])
         eat = eater(state, colour)
         value = eat * self.eat_weight - pieces_distance * self.dist_weight
         return value
@@ -73,7 +73,7 @@ class Evaluate:
     #     value = (eat + state.exit_value) * self.enemy2_eat_weight - pieces_distance * self.enemy2_dist_weight
     #     return value
 
-def heuristic(start, desti):
+def heuristic(start, desti, exit_value):
 
     total_heur = 0
     if len(start) == 0:
@@ -88,14 +88,15 @@ def heuristic(start, desti):
                 heur_list.append((abs(node[0] - end[0]) + abs(node[1] - end[1]) + abs(node_z - end_z)) / 2 + 1)
             exit_node.append(min(heur_list))
 
-        if len(exit_node) <= 4:
+        if (len(exit_node) + exit_value) <= 4:
             for value in exit_node:
                 total_heur += value
-            return total_heur/len(exit_node)
+            return total_heur/len(exit_node) - exit_value
         else:
-            for i in range(4):
+            for i in range(4-exit_value):
                 total_heur += min(exit_node)
-            return total_heur/len(exit_node)
+                exit_node.remove(min(exit_node))
+            return total_heur/(4-exit_value) - exit_value
 
 
 # def avoid(mine, enemy):

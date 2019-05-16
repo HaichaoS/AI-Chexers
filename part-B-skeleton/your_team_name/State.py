@@ -36,11 +36,12 @@ def form_pieces_dic(red, green, blue):
 
 def get_next_state(state, colour):
     """Return a list of neighbouring states."""
-    new_pieces_dic = state.pieces_dic.copy()
-    action_colour_pieces = new_pieces_dic[colour].copy()
 
     new_states = []
     for piece in state.pieces_dic[colour]:
+
+        new_pieces_dic = state.pieces_dic.copy()
+        action_colour_pieces = new_pieces_dic[colour].copy()
 
         # move the piece out of the pieces list once it reaches the destination
         if piece in state.desti_dic[colour]:
@@ -55,8 +56,11 @@ def get_next_state(state, colour):
             new_state.exit_dic = new_exit_dic.copy()
             new_state.turn = state.turn + 1
             new_states.append(new_state)
+            continue
 
         for change in NEIGHBOR:
+            new_pieces_dic = state.pieces_dic.copy()
+            action_colour_pieces = new_pieces_dic[colour].copy()
             new_piece = [piece[0] + change[0], piece[1] + change[1]]
             action = None
 
