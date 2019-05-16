@@ -19,7 +19,6 @@ class Maxn:
         children = get_next_state(state, colour)
 
         if (len(state.pieces) == 0) or (depth <= 0):
-            # print(colour, result)
             return result, state
 
         best = {"red": float("-inf"),
@@ -27,12 +26,6 @@ class Maxn:
                 "blue": float("-inf")}
 
         for child in children:
-
-            # print(child.colour)
-            # print(child.pieces)
-            # print(child.enemy1_pieces)
-            # print(child.enemy2_pieces)
-
             result, next_state = self.maxn(child, curr_depth-1, next_colour(colour), best[colour])
             if result[colour] is None:
                 self.evaluate.evaluate_add(result, state, colour)
@@ -41,11 +34,7 @@ class Maxn:
                 if (curr_depth == self.depth) and (curr_player == self.colour):
                     return_state = child
             if result[colour] > float("inf") - alpha:
-
-                # print(next_colour(colour), result)
                 return result, next_state
-
-        # print(colour, best)
         return best, return_state
 
 

@@ -7,108 +7,90 @@ class State:
         the pieces and blocks, the parent(successor), the heuristic value and cost.
         Also includes the action that turn it into the current state."""
 
-    def __init__(self, colour, pieces, desti_dic, enemy1, enemy2, enemy1_pieces, enemy2_pieces):
-        'create a new state'
+    def __init__(self, colour, pieces_dic, desti_dic):
         self.colour = colour
-        self.pieces = pieces
-        self.desti = desti_dic[colour]
-        self.enemy1_colour = enemy1
-        self.enemy2_colour = enemy2
-        self.enemy1_pieces = enemy1_pieces
-        self.enemy2_pieces = enemy2_pieces
-        self.enemy1_desti = desti_dic[enemy1]
-        self.enemy2_desti = desti_dic[enemy2]
-        self.desti_dic = desti_dic
+        self.pieces_dic = pieces_dic.copy()
+        self.desti_dic = desti_dic.copy()
         self.turn = 0
-        self.exit_value = 0
-        self.enemy1_exit_value = 0
-        self.enemy2_exit_value = 0
-        self.parent = None
+        self.exit_dic = {"red": 0, "green": 0, "blue": 0}
         self.before = None
         self.after = None
         self.action = None
 
+    def get_red_pieces(self):
+        return self.pieces_dic["red"]
+
+    def get_green_pieces(self):
+        return self.pieces_dic["green"]
+
+    def get_blue_pieces(self):
+        return self.pieces_dic["blue"]
+
+
+def form_pieces_dic(red, green, blue):
+    new_pieces_dic = {"red": red,
+                      "green": green,
+                      "blue": blue}
+    return new_pieces_dic
+
 
 def get_next_state(state, colour):
     """Return a list of neighbouring states."""
-    if colour == state.colour:
-        pieces = state.pieces.copy()
-        enemy1_pieces = state.enemy1_pieces.copy()
-        enemy2_pieces = state.enemy2_pieces.copy()
-    elif colour == state.enemy1_colour:
-        pieces = state.enemy1_pieces.copy()
-        enemy1_pieces = state.pieces.copy()
-        enemy2_pieces = state.enemy2_pieces.copy()
-    else:
-        pieces = state.enemy2_pieces.copy()
-        enemy1_pieces = state.enemy1_pieces.copy()
-        enemy2_pieces = state.pieces.copy()
+    new_pieces_dic = state.pieces_dic.copy()
+    action_colour_pieces = new_pieces_dic[colour].copy()
 
-    new_pieces = pieces.copy()
-    new_enemy1_pieces = enemy1_pieces.copy()
-    new_enemy2_pieces = enemy2_pieces.copy()
-
-    next_state = []
-    for piece in pieces:
+    new_states = []
+    for piece in state.pieces_dic[colour]:
 
         # move the piece out of the pieces list once it reaches the destination
         if piece in state.desti_dic[colour]:
-            remove_pieces = pieces.copy()
-            remove_pieces.remove(piece)
-            new_state = State(state.colour, remove_pieces.copy(), state.desti_dic, state.enemy1_colour,
-                              state.enemy2_colour, enemy1_pieces, enemy2_pieces)
-            new_state.before = piece.copy()
+            new_exit_dic = state.exit_dic.copy()
+            new_exit_dic[colour] += 1
+            action_colour_pieces.remove(piece)
+            new_pieces_dic[colour] = action_colour_pieces
+            new_state = State(state.colour, new_pieces_dic.copy(), state.desti_dic)
+            new_state.before = piece
             new_state.after = "EXIT"
-            new_state.parent = state
             new_state.action = "EXIT"
-            new_state.exit_value = state.exit_value + 1
-            next_state.append(new_state)
-            break
+            new_state.exit_dic = new_exit_dic.copy()
+            new_state.turn = state.turn + 1
+            new_states.append(new_state)
 
-        # find the possible positions that the current piece could reach
         for change in NEIGHBOR:
-
             new_piece = [piece[0] + change[0], piece[1] + change[1]]
-
             action = None
 
             if not piece_in_board(new_piece):
                 continue
 
-            # add positions that the piece could move to
-            if (new_piece not in pieces) and (new_piece not in enemy1_pieces) \
-                    and (new_piece not in enemy2_pieces):
-                new_pieces.remove(piece)
-                new_pieces.append(new_piece)
+            if new_piece not in (state.pieces_dic["red"] + state.pieces_dic["green"] + state.pieces_dic["blue"]):
+                action_colour_pieces.remove(piece)
+                action_colour_pieces.append(new_piece)
                 action = "MOVE"
-
-            # add positions that the piece could jump to
             else:
                 new_piece = [piece[0] + 2 * change[0], piece[1] + 2 * change[1]]
                 if not piece_in_board(new_piece):
                     continue
-                if (new_piece not in pieces) and (new_piece not in enemy1_pieces) \
-                        and (new_piece not in enemy2_pieces):
-                    new_pieces.remove(piece)
-                    new_pieces.append(new_piece)
+                if new_piece not in (state.pieces_dic["red"] + state.pieces_dic["green"] + state.pieces_dic["blue"]):
+                    action_colour_pieces.remove(piece)
+                    action_colour_pieces.append(new_piece)
                     action = "JUMP"
-                    middle = find_jump_over(piece, new_piece)
-                    if middle in enemy1_pieces:
-                        new_enemy1_pieces.remove(middle)
-                        new_pieces.append(middle)
-                    elif middle in enemy2_pieces:
-                        new_enemy2_pieces.remove(middle)
-                        new_pieces.append(middle)
-            new_state = State(state.colour, new_pieces.copy(), state.desti_dic, state.enemy1_colour,
-                              state.enemy2_colour, new_enemy1_pieces.copy(), new_enemy2_pieces.copy())
+                    middle_piece = find_jump_over(piece, new_piece)
+                    for key in state.pieces_dic.keys():
+                        if middle_piece in state.pieces_dic[key]:
+                            remove_colour_pieces = state.pieces_dic[key].copy()
+                            remove_colour_pieces.remove(middle_piece)
+                            action_colour_pieces.append(middle_piece)
+                            new_pieces_dic[key] = remove_colour_pieces
+            new_pieces_dic[colour] = action_colour_pieces
+            new_state = State(state.colour, new_pieces_dic.copy(), state.desti_dic)
             new_state.before = piece
-            new_state.after = new_piece.copy()
-            new_state.parent = state
+            new_state.after = new_piece
             new_state.action = action
+            new_state.turn = state.turn + 1
             if action:
-                next_state.append(new_state)
-
-    return next_state
+                new_states.append(new_state)
+    return new_states
 
 
 def piece_in_board(piece):
