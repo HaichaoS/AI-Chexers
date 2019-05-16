@@ -8,11 +8,11 @@ class Evaluate:
     def __init__(self, colour, state):
         self.colour = colour
         self.state = state
-        self.eat_weight = 10
-        self.dist_weight = 0
-        self.enemy1_eat_weight = 0
+        self.eat_weight = 0.9
+        self.dist_weight = 0.1
+        self.enemy1_eat_weight = 0.9
         self.enemy1_dist_weight = 0.1
-        self.enemy2_eat_weight = 0
+        self.enemy2_eat_weight = 0.9
         self.enemy2_dist_weight = 0.1
 
     def evaluate_create(self, state, colour):
@@ -43,15 +43,19 @@ class Evaluate:
         enemy_pieces = state.enemy1_pieces + state.enemy2_pieces
         pieces_distance = heuristic(pieces, state.desti_dic[colour])
         eat = eater(pieces, enemy_pieces)
+        # print("self eat: ", eat)
+        # print("self distance: ", pieces_distance)
         value = (eat + state.exit_value) * self.eat_weight - pieces_distance * self.dist_weight
         return value
 
     def evaluate_enemy1(self, state, colour):
         pieces = state.enemy1_pieces
         enemy_pieces = state.pieces + state.enemy2_pieces
-        pieces_distance = heuristic(pieces, state.desti_dic[colour])
+        pieces_distance = heuristic(pieces, state.desti_dic[colour], )
         eat = eater(pieces, enemy_pieces)
-        value = (eat + state.exit_value) * self.enemy1_eat_weight - pieces_distance * self.enemy1_dist_weight
+        # print("enemy1 eat: ", eat)
+        # print("enemy1 distance: ", pieces_distance)
+        value = (eat + 2 * state.exit_value) * self.enemy1_eat_weight - pieces_distance * self.enemy1_dist_weight
         return value
 
     def evaluate_enemy2(self, state, colour):
@@ -59,6 +63,8 @@ class Evaluate:
         enemy_pieces = state.pieces + state.enemy1_pieces
         pieces_distance = heuristic(pieces, state.desti_dic[colour])
         eat = eater(pieces, enemy_pieces)
+        # print("enemy2 eat: ", eat)
+        # print("enemy2 distance: ", pieces_distance)
         value = (eat + state.exit_value) * self.enemy2_eat_weight - pieces_distance * self.enemy2_dist_weight
         return value
 
@@ -66,14 +72,26 @@ class Evaluate:
 def heuristic(start, desti):
 
     total_heur = 0
-    for node in start:
-        heur_list = []
-        for end in desti:
-            node_z = - node[0] - node[1]
-            end_z = - end[0] - end[1]
-            heur_list.append((abs(node[0] - end[0]) + abs(node[1] - end[1]) + abs(node_z - end_z)) / 2 + 1)
-        total_heur += min(heur_list)
-    return total_heur
+    if len(start) == 0:
+        return 0
+    else:
+        exit_node = []
+        for node in start:
+            heur_list = []
+            for end in desti:
+                node_z = - node[0] - node[1]
+                end_z = - end[0] - end[1]
+                heur_list.append((abs(node[0] - end[0]) + abs(node[1] - end[1]) + abs(node_z - end_z)) / 2 + 1)
+            exit_node.append(min(heur_list))
+
+        if len(exit_node) <= 4:
+            for value in exit_node:
+                total_heur += value
+            return total_heur/len(exit_node)
+        else:
+            for i in range(4):
+                total_heur += min(exit_node)
+            return total_heur/len(exit_node)
 
 
 def avoid(mine, enemy):

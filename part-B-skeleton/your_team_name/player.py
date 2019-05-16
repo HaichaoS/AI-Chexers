@@ -1,4 +1,4 @@
-from your_team_name.State import State
+from your_team_name.State import *
 from your_team_name.Maxn import Maxn
 
 start_dic = {
@@ -177,12 +177,15 @@ class ExamplePlayer:
             if self.state.colour == colour:
                 if exit in self.state.pieces:
                     self.state.pieces.remove(exit)
+                    self.state.exit_value += 1
             elif self.state.enemy1_colour == colour:
                 if exit in self.state.enemy1_pieces:
                     self.state.enemy1_pieces.remove(exit)
+                    self.state.enemy1_exit_value += 1
             elif self.state.enemy2_colour == colour:
                 if exit in self.state.enemy2_pieces:
                     self.state.enemy2_pieces.remove(exit)
+                    self.state.enemy2_exit_value += 1
 
 
 def find_jump_over(parent, kid):

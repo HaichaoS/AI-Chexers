@@ -21,27 +21,42 @@ class State:
         self.desti_dic = desti_dic
         self.turn = 0
         self.exit_value = 0
+        self.enemy1_exit_value = 0
+        self.enemy2_exit_value = 0
         self.parent = None
         self.before = None
         self.after = None
         self.action = None
 
 
-def get_next_state(state):
+def get_next_state(state, colour):
     """Return a list of neighbouring states."""
-    pieces = state.pieces
-    enemy1_pieces = state.enemy1_pieces
-    enemy2_pieces = state.enemy2_pieces
+    if colour == state.colour:
+        pieces = state.pieces.copy()
+        enemy1_pieces = state.enemy1_pieces.copy()
+        enemy2_pieces = state.enemy2_pieces.copy()
+    elif colour == state.enemy1_colour:
+        pieces = state.enemy1_pieces.copy()
+        enemy1_pieces = state.pieces.copy()
+        enemy2_pieces = state.enemy2_pieces.copy()
+    else:
+        pieces = state.enemy2_pieces.copy()
+        enemy1_pieces = state.enemy1_pieces.copy()
+        enemy2_pieces = state.pieces.copy()
+
+    new_pieces = pieces.copy()
+    new_enemy1_pieces = enemy1_pieces.copy()
+    new_enemy2_pieces = enemy2_pieces.copy()
 
     next_state = []
-    for position, piece in enumerate(pieces):
+    for piece in pieces:
 
         # move the piece out of the pieces list once it reaches the destination
-        if piece in state.desti:
+        if piece in state.desti_dic[colour]:
             remove_pieces = pieces.copy()
             remove_pieces.remove(piece)
             new_state = State(state.colour, remove_pieces.copy(), state.desti_dic, state.enemy1_colour,
-                              state.enemy2_colour, state.enemy1_pieces, state.enemy2_pieces)
+                              state.enemy2_colour, enemy1_pieces, enemy2_pieces)
             new_state.before = piece.copy()
             new_state.after = "EXIT"
             new_state.parent = state
@@ -54,7 +69,7 @@ def get_next_state(state):
         for change in NEIGHBOR:
 
             new_piece = [piece[0] + change[0], piece[1] + change[1]]
-            new_pieces = pieces.copy()
+
             action = None
 
             if not piece_in_board(new_piece):
@@ -63,7 +78,8 @@ def get_next_state(state):
             # add positions that the piece could move to
             if (new_piece not in pieces) and (new_piece not in enemy1_pieces) \
                     and (new_piece not in enemy2_pieces):
-                new_pieces[position] = new_piece
+                new_pieces.remove(piece)
+                new_pieces.append(new_piece)
                 action = "MOVE"
 
             # add positions that the piece could jump to
@@ -73,11 +89,18 @@ def get_next_state(state):
                     continue
                 if (new_piece not in pieces) and (new_piece not in enemy1_pieces) \
                         and (new_piece not in enemy2_pieces):
-                    new_pieces[position] = new_piece
+                    new_pieces.remove(piece)
+                    new_pieces.append(new_piece)
                     action = "JUMP"
-
+                    middle = find_jump_over(piece, new_piece)
+                    if middle in enemy1_pieces:
+                        new_enemy1_pieces.remove(middle)
+                        new_pieces.append(middle)
+                    elif middle in enemy2_pieces:
+                        new_enemy2_pieces.remove(middle)
+                        new_pieces.append(middle)
             new_state = State(state.colour, new_pieces.copy(), state.desti_dic, state.enemy1_colour,
-                              state.enemy2_colour, state.enemy1_pieces, state.enemy2_pieces)
+                              state.enemy2_colour, new_enemy1_pieces.copy(), new_enemy2_pieces.copy())
             new_state.before = piece
             new_state.after = new_piece.copy()
             new_state.parent = state
@@ -98,3 +121,20 @@ def piece_in_board(piece):
     if piece_z < -3 or piece_z > 3:
         return False
     return True
+
+
+def find_jump_over(parent, kid):
+    x = parent[0] - kid[0]
+    y = parent[1] - kid[1]
+    if (x == -2) and (y == 2):
+        return [parent[0] + 1, parent[1] - 1]
+    elif (x == 2) and (y == -2):
+        return [parent[0] - 1, parent[1] + 1]
+    elif x == -2:
+        return [parent[0] + 1, parent[1]]
+    elif x == 2:
+        return [parent[0] - 1, parent[1]]
+    elif y == -2:
+        return [parent[0], parent[1] + 1]
+    elif y == 2:
+        return [parent[0], parent[1] - 1]
