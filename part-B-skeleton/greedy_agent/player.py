@@ -45,7 +45,7 @@ class ExamplePlayer:
         state = State(colour, start_dic, desti_dic)
         self.state = state
         self.colour = colour
-        self.maxn = Maxn(self.colour, 3, self.state)
+        self.maxn = Maxn(self.colour, 1, self.state)
 
     def action(self):
         """
@@ -73,7 +73,7 @@ class ExamplePlayer:
             if len(self.state.pieces_dic[self.colour]) == 0:
                 return ("PASS", None)
 
-            result, state = self.maxn.maxn(self.state, 3, self.colour, -float("inf"))
+            result, state = self.maxn.maxn(self.state, 1, self.colour, -float("inf"))
 
             if state.action == "EXIT":
                 action = (state.action, tuple(state.before))
@@ -130,7 +130,7 @@ class ExamplePlayer:
                 self.state.pieces_dic[colour].remove(exit_piece)
                 self.state.exit_dic[colour] += 1
 
-        # print("exit:", self.state.exit_dic[colour])
+        print("exit:", self.state.exit_dic[colour])
 
 
 def start_action(state, turn):

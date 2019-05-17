@@ -1,0 +1,1 @@
+from random_agent.player import ExamplePlayer as Player

@@ -10,9 +10,9 @@ class Evaluate:
         self.state = state
         self.eat_weight = 100
         self.dist_weight = 1
-        self.exit_weight = 10
-        self.avoid_weight = 0.01
-        self.bound_weight = 0.1
+        # self.exit_weight = 10
+        # self.avoid_weight = 0.01
+        # self.bound_weight = 0.1
         # self.enemy1_eat_weight = 0
         # self.enemy1_dist_weight = 0.1
         # self.enemy2_eat_weight = 0
@@ -46,14 +46,8 @@ class Evaluate:
         eat = eater(state, colour)
         avoid_distance = avoid(pieces, enemy_pieces)
         bound_value = bound(pieces)
-        exit_value = can_exit(state, colour)
-        if exit_value >= 0:
-            value = eat * self.eat_weight - pieces_distance * self.dist_weight + \
-                    exit_value * self.exit_weight + bound_value * \
-                    self.bound_weight
-        else:
-            value = eat * self.eat_weight + avoid_distance * self.avoid_weight + \
-                    bound_value * self.bound_weight
+        exit_value = can_exit(state, colour):
+        value = eat * self.eat_weight - pieces_distance * self.dist_weight
         return value
 
         # if colour == state.colour:
@@ -153,7 +147,6 @@ def bound(pieces):
 #         if piece in state.desti_dic[colour]:
 #             desti_value += 1
 #     return desti_value
-
 
 def can_exit(state, colour):
     if (state.exit_dic[colour] + len(state.pieces_dic[colour])) >= 4:

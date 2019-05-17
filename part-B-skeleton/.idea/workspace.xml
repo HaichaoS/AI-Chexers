@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98ec5280-5a8c-4ea4-ae01-25877e213542" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/part-B-skeleton.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/part-B-skeleton.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/your_team_name/Maxn.py" beforeDir="false" afterPath="$PROJECT_DIR$/your_team_name/Maxn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/your_team_name/State.py" beforeDir="false" afterPath="$PROJECT_DIR$/your_team_name/State.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/your_team_name/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/your_team_name/evaluate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/your_team_name/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/your_team_name/player.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,25 +25,29 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/your_team_name/player.py">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2375">
+              <caret line="133" lean-forward="true" selection-start-line="133" selection-end-line="133" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/your_team_name/evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="98" column="57" selection-start-line="98" selection-start-column="57" selection-end-line="98" selection-end-column="57" />
+            <state relative-caret-position="305">
+              <caret line="156" lean-forward="true" selection-start-line="156" selection-end-line="156" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/your_team_name/State.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
+            <state relative-caret-position="1143">
+              <caret line="107" column="20" selection-start-line="107" selection-start-column="20" selection-end-line="107" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -52,8 +55,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/your_team_name/Maxn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="702">
-              <caret line="39" column="22" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="22" />
+            <state relative-caret-position="-276">
+              <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -88,17 +91,18 @@
         <option value="$PROJECT_DIR$/referee/__main__.py" />
         <option value="$PROJECT_DIR$/your_team_name/Paranoid.py" />
         <option value="$PROJECT_DIR$/your_team_name/evaluate_agent.py" />
-        <option value="$PROJECT_DIR$/your_team_name/player.py" />
         <option value="$PROJECT_DIR$/your_team_name/Maxn.py" />
-        <option value="$PROJECT_DIR$/your_team_name/evaluate.py" />
         <option value="$PROJECT_DIR$/your_team_name/State.py" />
+        <option value="$PROJECT_DIR$/random_agent/player.py" />
+        <option value="$PROJECT_DIR$/your_team_name/evaluate.py" />
+        <option value="$PROJECT_DIR$/your_team_name/player.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="826" />
+    <option name="height" value="825" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -160,7 +164,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/referee/__main__.py" />
-      <option name="PARAMETERS" value="-d -1 your_team_name your_team_name your_team_name" />
+      <option name="PARAMETERS" value="-d -1 your_team_name random_agent random_agent" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -213,14 +217,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="826" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="825" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2746781" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2746781" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29972753" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.12687585" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5149864" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -266,33 +271,47 @@
     <entry file="file://$PROJECT_DIR$/referee/options.py" />
     <entry file="file://$PROJECT_DIR$/referee/__main__.py" />
     <entry file="file://$PROJECT_DIR$/your_team_name/Paranoid.py" />
+    <entry file="file://$PROJECT_DIR$/random_agent/player.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1222">
+          <caret line="2" column="36" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/your_team_name/Maxn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-276">
+          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/your_team_name/State.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1143">
+          <caret line="107" column="20" selection-start-line="107" selection-start-column="20" selection-end-line="107" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/referee/log.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/your_team_name/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/your_team_name/Maxn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="39" column="22" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/your_team_name/evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="98" column="57" selection-start-line="98" selection-start-column="57" selection-end-line="98" selection-end-column="57" />
+        <state relative-caret-position="305">
+          <caret line="156" lean-forward="true" selection-start-line="156" selection-end-line="156" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/your_team_name/player.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/your_team_name/State.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
+        <state relative-caret-position="2375">
+          <caret line="133" lean-forward="true" selection-start-line="133" selection-end-line="133" />
         </state>
       </provider>
     </entry>
