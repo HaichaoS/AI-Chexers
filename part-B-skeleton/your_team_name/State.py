@@ -1,3 +1,9 @@
+"""
+COMP30024 Artificial Intelligence, Semester 1 2019
+Solution to Project Part B: Playing the Game
+Authors: Haichao Song, Haolin Zhou
+"""
+
 NEIGHBOR = [[1, -1], [0, -1], [-1, 0], [1, 0], [-1, 1], [0, 1]]
 
 
@@ -17,21 +23,12 @@ class State:
         self.after = None
         self.action = None
 
-    def get_red_pieces(self):
-        return self.pieces_dic["red"]
 
-    def get_green_pieces(self):
-        return self.pieces_dic["green"]
+def get_all_pieces(state):
+    """Return all pieces in a list"""
 
-    def get_blue_pieces(self):
-        return self.pieces_dic["blue"]
-
-
-def form_pieces_dic(red, green, blue):
-    new_pieces_dic = {"red": red,
-                      "green": green,
-                      "blue": blue}
-    return new_pieces_dic
+    return state.pieces_dic["red"] + state.pieces_dic["green"] + \
+        state.pieces_dic["blue"]
 
 
 def get_next_state(state, colour):
@@ -56,27 +53,30 @@ def get_next_state(state, colour):
             new_state.exit_dic = new_exit_dic.copy()
             new_state.turn = state.turn + 1
             new_states.append(new_state)
-            continue
 
+        # Loop all six directions
         for change in NEIGHBOR:
             new_pieces_dic = state.pieces_dic.copy()
             action_colour_pieces = new_pieces_dic[colour].copy()
             new_piece = [piece[0] + change[0], piece[1] + change[1]]
             action = None
 
+            # If its in board and empty, piece can be moved to that place
             if not piece_in_board(new_piece):
                 continue
-
-            if new_piece not in (state.pieces_dic["red"] + state.pieces_dic["green"] + state.pieces_dic["blue"]):
+            if new_piece not in (get_all_pieces(state)):
                 action_colour_pieces.remove(piece)
                 if new_piece not in action_colour_pieces:
                     action_colour_pieces.append(new_piece)
                 action = "MOVE"
+
             else:
+
+                # If there is another piece, piece can try to jump
                 new_piece = [piece[0] + 2 * change[0], piece[1] + 2 * change[1]]
                 if not piece_in_board(new_piece):
                     continue
-                if new_piece not in (state.pieces_dic["red"] + state.pieces_dic["green"] + state.pieces_dic["blue"]):
+                if new_piece not in (get_all_pieces(state)):
                     action_colour_pieces.remove(piece)
                     if new_piece not in action_colour_pieces:
                         action_colour_pieces.append(new_piece)
@@ -89,6 +89,8 @@ def get_next_state(state, colour):
                             if middle_piece not in action_colour_pieces:
                                 action_colour_pieces.append(middle_piece)
                             new_pieces_dic[key] = remove_colour_pieces
+
+            # create a new state as the next state and append into a list
             new_pieces_dic[colour] = action_colour_pieces
             new_state = State(state.colour, new_pieces_dic.copy(), state.desti_dic)
             new_state.before = piece
@@ -98,11 +100,13 @@ def get_next_state(state, colour):
             new_state.turn = state.turn + 1
             if action:
                 new_states.append(new_state)
+
     return new_states
 
 
 def piece_in_board(piece):
     """Check whether the piece is contained in the board."""
+
     piece_z = - piece[0] - piece[1]
     if piece[0] < -3 or piece[0] > 3:
         return False
@@ -114,6 +118,8 @@ def piece_in_board(piece):
 
 
 def find_jump_over(parent, kid):
+    """Find the middle piece when jump through it"""
+
     x = parent[0] - kid[0]
     y = parent[1] - kid[1]
     if (x == -2) and (y == 2):

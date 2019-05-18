@@ -1,17 +1,29 @@
+"""
+COMP30024 Artificial Intelligence, Semester 1 2019
+Solution to Project Part B: Playing the Game
+Authors: Haichao Song, Haolin Zhou
+"""
+
 from your_team_name.State import *
 from your_team_name.Maxn import Maxn
 
-start_dic = {
+
+# The Start of all pieces in the board
+START_DIC = {
     "red": [[-3, 0], [-3, 1], [-3, 2], [-3, 3]],
     "blue": [[3, 0], [2, 1], [1, 2], [0, 3]],
     "green": [[0, -3], [1, -3], [2, -3], [3, -3]]
 }
-desti_dic = {
+
+# The destination of each colour in the board
+DESTI_DIC = {
     "red": [[3, -3], [3, -2], [3, -1], [3, 0]],
     "blue": [[0, -3], [-1, -2], [-2, -1], [-3, 0]],
     "green": [[-3, 3], [-2, 3], [-1, 3], [0, 3]]
 }
-start_action_dic = {
+
+# The planned starting action for each colour in the game
+START_ACTION_DIC = {
     "red": [("MOVE", ((-3, 0), (-2, 0))),
             ("MOVE", ((-2, 0), (-2, 1))),
             ("MOVE", ((-3, 3), (-2, 2)))],
@@ -22,11 +34,9 @@ start_action_dic = {
               ("MOVE", ((0, 2), (1, 1))),
               ("MOVE", ((3, 0), (2, 0)))]
 }
-defend_dic = {
-    "red": [[3, -3], [3, 0]],
-    "green": [[-3, 3], [0, 3]],
-    "blue": [[-3, 0], [0, -3]]
-}
+
+# Depth for Maxn search
+MAXN_DEPTH = 3
 
 
 class ExamplePlayer:
@@ -41,11 +51,11 @@ class ExamplePlayer:
         program will play as (Red, Green or Blue). The value will be one of the 
         strings "red", "green", or "blue" correspondingly.
         """
-        # TODO: Set up state representation.
-        state = State(colour, start_dic, desti_dic)
+        # Set up state representation and maxn agent
+        state = State(colour, START_DIC, DESTI_DIC)
         self.state = state
         self.colour = colour
-        self.maxn = Maxn(self.colour, 3, self.state)
+        self.maxn = Maxn(self.colour, MAXN_DEPTH, self.state)
 
     def action(self):
         """
@@ -58,31 +68,34 @@ class ExamplePlayer:
         must be represented based on the above instructions for representing 
         actions.
         """
-        # TODO: Decide what action to take.
+
+        # Decide what action to take.
+        # for the first three steps, do the planned job
+        action = None
         if self.state.turn < 3:
             action = start_action(self.state, self.state.turn)
 
-        # elif (len(self.state.pieces) <= 2) and \
-        #     (self.state.exit_value + len(self.state.pieces) < 4):
-        #     if len(self.state.enemy1_pieces) > len(self.state.enemy2_pieces):
-        #         action = defend(self.state, self.state.enemy1_colour)
-        #     else:
-        #         action = defend(self.state, self.state.enemy2_colour)
-
-        else:
+        # Run maxn with three depth if we still have pieces
+        if action is None:
             if len(self.state.pieces_dic[self.colour]) == 0:
                 return ("PASS", None)
 
-            result, state = self.maxn.maxn(self.state, 3, self.colour, -float("inf"))
+            result, state = self.maxn.maxn(self.state, MAXN_DEPTH, self.colour,
+                                           -float("inf"))
 
-            if state.action == "EXIT":
+            if state is None:
+                action = ("PASS", None)
+            # Get action form according to the state maxn gives us
+            elif state.action == "EXIT":
                 action = (state.action, tuple(state.before))
             elif state.action == "MOVE" or state.action == "JUMP":
                 action = (state.action, (tuple(state.before), tuple(state.after)))
             else:
                 action = ("PASS", None)
 
+        # Add turn count
         self.state.turn += 1
+
         return action
 
     def update(self, colour, action):
@@ -105,6 +118,7 @@ class ExamplePlayer:
         """
         # TODO: Update state representation in response to action.
 
+        # For MOVE action, change its own pieces place
         if action[0] == "MOVE":
             before = list(action[1][0])
             after = list(action[1][1])
@@ -112,6 +126,8 @@ class ExamplePlayer:
                 self.state.pieces_dic[colour].remove(before)
                 self.state.pieces_dic[colour].append(after)
 
+        # For JUMP action, change its own pieces place and
+        # if it jumps other colours piece, change to its own colour
         elif action[0] == "JUMP":
             before = list(action[1][0])
             after = list(action[1][1])
@@ -124,17 +140,31 @@ class ExamplePlayer:
                     self.state.pieces_dic[key].remove(middle_piece)
                     self.state.pieces_dic[colour].append(middle_piece)
 
+        # For EXIT action, move the exit piece and add its exit value
         elif action[0] == "EXIT":
             exit_piece = list(action[1])
             if exit_piece in self.state.pieces_dic[colour]:
                 self.state.pieces_dic[colour].remove(exit_piece)
                 self.state.exit_dic[colour] += 1
 
-        # print("exit:", self.state.exit_dic[colour])
-
 
 def start_action(state, turn):
-    return start_action_dic[state.colour][turn]
+    """
+    This method is called at the first three turns of game to let player
+    plays planned steps for its pieces in order to bound its pieces together
+    to get best result in the end.
+
+    The parameter state will be the current situations on the board.
+
+    The parameter turn will be the current turn the player at.
+    """
+
+    # if the target place is empty, move to that target
+    if list(START_ACTION_DIC[state.colour][turn][1][1]) \
+            not in get_all_pieces(state):
+        return START_ACTION_DIC[state.colour][turn]
+    else:
+        return None
 
 
 

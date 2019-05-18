@@ -44,9 +44,6 @@ class Evaluate:
         # print("after: ", state.after)
         pieces_distance = heuristic(pieces, state.desti_dic[colour], state.exit_dic[colour])
         eat = eater(state, colour)
-        avoid_distance = avoid(pieces, enemy_pieces)
-        bound_value = bound(pieces)
-        exit_value = can_exit(state, colour):
         value = eat * self.eat_weight - pieces_distance * self.dist_weight
         return value
 

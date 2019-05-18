@@ -11,17 +11,6 @@ desti_dic = {
     "blue": [[0, -3], [-1, -2], [-2, -1], [-3, 0]],
     "green": [[-3, 3], [-2, 3], [-1, 3], [0, 3]]
 }
-start_action_dic = {
-    "red": [("MOVE", ((-3, 0), (-2, 0))),
-            ("MOVE", ((-2, 0), (-2, 1))),
-            ("MOVE", ((-3, 3), (-2, 2)))],
-    "green": [("MOVE", ((3, -3), (2, -2))),
-              ("MOVE", ((2, -2), (1, -2))),
-              ("MOVE", ((0, -3), (0, -2)))],
-    "blue": [("MOVE", ((0, 3), (0, 2))),
-              ("MOVE", ((0, 2), (1, 1))),
-              ("MOVE", ((3, 0), (2, 0)))]
-}
 defend_dic = {
     "red": [[3, -3], [3, 0]],
     "green": [[-3, 3], [0, 3]],
@@ -59,8 +48,6 @@ class ExamplePlayer:
         actions.
         """
         # TODO: Decide what action to take.
-        if self.state.turn < 3:
-            action = start_action(self.state, self.state.turn)
 
         # elif (len(self.state.pieces) <= 2) and \
         #     (self.state.exit_value + len(self.state.pieces) < 4):
@@ -69,18 +56,17 @@ class ExamplePlayer:
         #     else:
         #         action = defend(self.state, self.state.enemy2_colour)
 
+        if len(self.state.pieces_dic[self.colour]) == 0:
+            return ("PASS", None)
+
+        result, state = self.maxn.maxn(self.state, 1, self.colour, -float("inf"))
+
+        if state.action == "EXIT":
+            action = (state.action, tuple(state.before))
+        elif state.action == "MOVE" or state.action == "JUMP":
+            action = (state.action, (tuple(state.before), tuple(state.after)))
         else:
-            if len(self.state.pieces_dic[self.colour]) == 0:
-                return ("PASS", None)
-
-            result, state = self.maxn.maxn(self.state, 1, self.colour, -float("inf"))
-
-            if state.action == "EXIT":
-                action = (state.action, tuple(state.before))
-            elif state.action == "MOVE" or state.action == "JUMP":
-                action = (state.action, (tuple(state.before), tuple(state.after)))
-            else:
-                action = ("PASS", None)
+            action = ("PASS", None)
 
         self.state.turn += 1
         return action
@@ -132,9 +118,6 @@ class ExamplePlayer:
 
         print("exit:", self.state.exit_dic[colour])
 
-
-def start_action(state, turn):
-    return start_action_dic[state.colour][turn]
 
 
 

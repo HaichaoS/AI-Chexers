@@ -64,6 +64,7 @@ VERBOSITY_NOVALUE = 3 # highest level, debug board
 LOGFILE_DEFAULT = None
 LOGFILE_NOVALUE = "battle.log"
 
+
 def get_options():
     """
 
