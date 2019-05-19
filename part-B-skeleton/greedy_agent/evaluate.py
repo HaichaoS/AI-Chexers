@@ -1,4 +1,4 @@
-from your_team_name.State import *
+from greedy_agent.State import *
 
 COLOURS = ["red", "green", "blue"]
 

@@ -4,8 +4,8 @@ Solution to Project Part B: Playing the Game
 Authors: Haichao Song, Haolin Zhou
 """
 
-from your_team_name.State import *
-from your_team_name.Maxn import Maxn
+from team_404.State import *
+from team_404.Maxn import Maxn
 
 
 # The Start of all pieces in the board
@@ -25,14 +25,14 @@ DESTI_DIC = {
 # The planned starting action for each colour in the game
 START_ACTION_DIC = {
     "red": [("MOVE", ((-3, 0), (-2, 0))),
-            ("MOVE", ((-2, 0), (-2, 1))),
-            ("MOVE", ((-3, 3), (-2, 2)))],
+            ("MOVE", ((-3, 3), (-2, 2))),
+            ("MOVE", ((-2, 0), (-2, 1)))],
     "green": [("MOVE", ((3, -3), (2, -2))),
-              ("MOVE", ((2, -2), (1, -2))),
-              ("MOVE", ((0, -3), (0, -2)))],
+              ("MOVE", ((0, -3), (0, -2))),
+              ("MOVE", ((2, -2), (1, -2)))],
     "blue": [("MOVE", ((0, 3), (0, 2))),
-              ("MOVE", ((0, 2), (1, 1))),
-              ("MOVE", ((3, 0), (2, 0)))]
+             ("MOVE", ((3, 0), (2, 0))),
+             ("MOVE", ((0, 2), (1, 1)))]
 }
 
 # Depth for Maxn search

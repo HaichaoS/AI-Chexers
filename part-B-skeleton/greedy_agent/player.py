@@ -1,5 +1,5 @@
-from your_team_name.State import *
-from your_team_name.Maxn import Maxn
+from greedy_agent.State import *
+from greedy_agent.Maxn import Maxn
 
 start_dic = {
     "red": [[-3, 0], [-3, 1], [-3, 2], [-3, 3]],

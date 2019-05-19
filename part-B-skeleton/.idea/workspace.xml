@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98ec5280-5a8c-4ea4-ae01-25877e213542" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/battleground/options.py" beforeDir="false" afterPath="$PROJECT_DIR$/battleground/options.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/greedy_agent/Maxn.py" beforeDir="false" afterPath="$PROJECT_DIR$/greedy_agent/Maxn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/greedy_agent/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/greedy_agent/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/greedy_agent/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/greedy_agent/evaluate.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/greedy_agent/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/greedy_agent/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/your_team_name/Maxn.py" beforeDir="false" afterPath="$PROJECT_DIR$/your_team_name/Maxn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/your_team_name/State.py" beforeDir="false" afterPath="$PROJECT_DIR$/your_team_name/State.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/your_team_name/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/your_team_name/evaluate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/your_team_name/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/your_team_name/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/your_team_name/Maxn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/your_team_name/Paranoid.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/your_team_name/State.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/your_team_name/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/your_team_name/evaluate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/your_team_name/player.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,33 +22,91 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/your_team_name/evaluate.py">
+        <entry file="file://$PROJECT_DIR$/greedy_agent/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1008">
-              <caret line="56" column="34" lean-forward="true" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="34" />
+            <state>
+              <caret column="29" selection-start-column="29" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/team_404/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="39" selection-start-column="39" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/your_team_name/Maxn.py">
+        <entry file="file://$PROJECT_DIR$/team_404/evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1098">
-              <caret line="61" column="46" selection-start-line="61" selection-start-column="46" selection-end-line="61" selection-end-column="46" />
+            <state relative-caret-position="432">
+              <caret line="78" column="30" selection-start-line="78" selection-start-column="30" selection-end-line="78" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/your_team_name/Paranoid.py">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/greedy_agent/Maxn.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="17" selection-start-column="17" selection-end-column="17" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/your_team_name/State.py">
+        <entry file="file://$PROJECT_DIR$/team_404/Maxn.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/team_404/Paranoid.py">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret selection-end-line="4" selection-end-column="3" />
+              <caret column="13" selection-start-column="13" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/team_404/player.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-436">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/team_404/State.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///usr/local/Cellar/python/3.7.2_2/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1655">
+              <caret line="126" selection-start-line="126" selection-end-line="126" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/greedy_agent/State.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
             </state>
           </provider>
         </entry>
@@ -86,13 +146,20 @@
         <option value="$PROJECT_DIR$/your_team_name/Paranoid.py" />
         <option value="$PROJECT_DIR$/your_team_name/evaluate_agent.py" />
         <option value="$PROJECT_DIR$/random_agent/player.py" />
-        <option value="$PROJECT_DIR$/greedy_agent/player.py" />
-        <option value="$PROJECT_DIR$/greedy_agent/evaluate.py" />
         <option value="$PROJECT_DIR$/battleground/options.py" />
-        <option value="$PROJECT_DIR$/your_team_name/player.py" />
         <option value="$PROJECT_DIR$/your_team_name/State.py" />
-        <option value="$PROJECT_DIR$/your_team_name/evaluate.py" />
         <option value="$PROJECT_DIR$/your_team_name/Maxn.py" />
+        <option value="$PROJECT_DIR$/your_team_name/player.py" />
+        <option value="$PROJECT_DIR$/greedy_agent/__init__.py" />
+        <option value="$PROJECT_DIR$/greedy_agent/evaluate.py" />
+        <option value="$PROJECT_DIR$/greedy_agent/Maxn.py" />
+        <option value="$PROJECT_DIR$/greedy_agent/player.py" />
+        <option value="$PROJECT_DIR$/your_team_name/evaluate.py" />
+        <option value="$PROJECT_DIR$/team_404/__init__.py" />
+        <option value="$PROJECT_DIR$/team_404/Maxn.py" />
+        <option value="$PROJECT_DIR$/team_404/Paranoid.py" />
+        <option value="$PROJECT_DIR$/team_404/player.py" />
+        <option value="$PROJECT_DIR$/team_404/evaluate.py" />
       </list>
     </option>
   </component>
@@ -118,7 +185,12 @@
             <path>
               <item name="part-B-skeleton" type="b2602c69:ProjectViewProjectNode" />
               <item name="part-B-skeleton" type="462c0819:PsiDirectoryNode" />
-              <item name="your_team_name" type="462c0819:PsiDirectoryNode" />
+              <item name="greedy_agent" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="part-B-skeleton" type="b2602c69:ProjectViewProjectNode" />
+              <item name="part-B-skeleton" type="462c0819:PsiDirectoryNode" />
+              <item name="team_404" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -156,7 +228,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/referee/__main__.py" />
-      <option name="PARAMETERS" value="-d -1 your_team_name random_agent random_agent" />
+      <option name="PARAMETERS" value="-d -1 team_404 random_agent random_agent" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -210,14 +282,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="825" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27825466" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28183118" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.15825376" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.25784448" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.18553889" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5149864" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -296,33 +367,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/greedy_agent/player.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/greedy_agent/evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-451">
-          <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/your_team_name/player.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="91" column="5" selection-start-line="91" selection-start-column="5" selection-end-line="91" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/your_team_name/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -333,10 +377,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/your_team_name/evaluate.py">
+    <entry file="file://$PROJECT_DIR$/your_team_name/player.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1008">
-          <caret line="56" column="34" lean-forward="true" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="34" />
+        <state relative-caret-position="-1982">
+          <caret line="34" column="39" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -345,8 +389,99 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/your_team_name/Maxn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1098">
+        <state relative-caret-position="598">
           <caret line="61" column="46" selection-start-line="61" selection-start-column="46" selection-end-line="61" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/greedy_agent/evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="17" selection-start-column="17" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/greedy_agent/player.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/your_team_name/evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="5" lean-forward="true" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/greedy_agent/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="29" selection-start-column="29" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/team_404/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="39" selection-start-column="39" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/team_404/Maxn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/team_404/Paranoid.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/team_404/State.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/Cellar/python/3.7.2_2/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1655">
+          <caret line="126" selection-start-line="126" selection-end-line="126" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/greedy_agent/Maxn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="17" selection-start-column="17" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/greedy_agent/State.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/team_404/player.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-436">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/team_404/evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="78" column="30" selection-start-line="78" selection-start-column="30" selection-end-line="78" selection-end-column="30" />
         </state>
       </provider>
     </entry>

@@ -1,4 +1,4 @@
-from your_team_name.evaluate import *
+from greedy_agent.evaluate import *
 
 
 class Maxn:

@@ -4,7 +4,7 @@ Solution to Project Part B: Playing the Game
 Authors: Haichao Song, Haolin Zhou
 """
 
-from your_team_name.State import *
+from team_404.State import *
 
 
 class Evaluate:
@@ -16,9 +16,9 @@ class Evaluate:
         self.colour = colour
         self.state = state
         self.eat_weight = 100
-        self.exit_weight = 100
+        self.exit_weight = 200
         self.dist_weight = 1
-        self.bound_weight = 0.1
+        self.bound_weight = 10
         self.avoid_weight = 0.01
         self.side_weight = 0.01
 
@@ -55,22 +55,28 @@ class Evaluate:
         # Calculate different factors
         pieces_distance = heuristic(pieces, state.desti_dic[colour], state.exit_dic[colour])
         eat = eater(state, colour)
-        avoid_distance = avoid(pieces, enemy_pieces)
+        avoid_distance = heuristic(pieces, enemy_pieces, state.exit_dic[colour])
         bound_value = bound(pieces)
         exit_value = can_exit(state, colour)
         side_value = side(state, colour)
+        in_desti = desti(state, colour)
 
         # Get evaluation value in different situations and return value:
-        if (state.action == "EXIT") and exit_value:
+        if ((state.action == "EXIT") or in_desti) and exit_value:
             value = eat * self.eat_weight - pieces_distance * self.dist_weight\
-                    + exit_value * self.exit_weight + bound_value * \
-                    self.bound_weight + avoid_distance * self.avoid_weight
+                    + exit_value * self.exit_weight + avoid_distance * \
+                    self.avoid_weight + side_value * self.side_weight + \
+                    bound_value * self.bound_weight
+            print("USE VALUE 1")
         elif (exit_value < 0) and (avoid_distance > 2):
             value = eat * self.eat_weight + pieces_distance * self.dist_weight\
                     + bound_value * self.bound_weight + side_value * self.side_weight
+            print("USE VALUE 2")
         else:
             value = eat * self.eat_weight - pieces_distance * self.dist_weight\
-                    + exit_value * self.exit_weight + bound_value * self.bound_weight
+                    + exit_value * self.exit_weight + bound_value * self.bound_weight\
+                    + side_value * self.side_weight
+            print("USE VALUE 3")
         return value
 
 
@@ -81,7 +87,7 @@ def heuristic(pieces, desti, exit_value):
     exit pieces). """
 
     total_heur = 0
-    if len(pieces) == 0:
+    if (len(pieces) == 0) or (len(desti) == 0):
         return 0
     else:
         pieces_distance = []
@@ -92,7 +98,8 @@ def heuristic(pieces, desti, exit_value):
                 end_z = - end[0] - end[1]
                 heur_list.append((abs(piece[0] - end[0]) + abs(piece[1] - end[1]) +
                                   abs(piece_z - end_z)) / 2 + 1)
-            pieces_distance.append(min(heur_list))
+            if len(heur_list) > 0:
+                pieces_distance.append(min(heur_list))
 
         if (len(pieces) + exit_value) <= 4:
             for value in pieces_distance:
@@ -107,42 +114,25 @@ def heuristic(pieces, desti, exit_value):
             return total_heur/(4-exit_value)
 
 
-def avoid(mine, enemy):
-    """Calculate the distance to enemy pieces. Return the average distance to
-    the closest enemy piece for every own pieces"""
-
-    enemy_avoid = 0
-    if (len(mine) == 0) or (len(enemy) == 0):
-        return 0
-    else:
-        for node in mine:
-            enemy_list = []
-            for end in enemy:
-                node_z = - node[0] - node[1]
-                end_z = - end[0] - end[1]
-                enemy_list.append((abs(node[0] - end[0]) + abs(node[1] - end[1]) +
-                                   abs(node_z - end_z)) / 2 + 1)
-            enemy_avoid += min(enemy_list)
-    return enemy_avoid/len(mine)
-
-
 def eater(state, colour):
     """Return the value our own pieces (including exit pieces)"""
 
-    return len(state.pieces_dic[colour]) + state.exit_dic[colour]
+    return len(state.pieces_dic[colour]) + state.exit_dic[colour] - 12
 
 
 def bound(pieces):
     """Calculate number of our own pieces around every pieces.
     The value will be higher if pieces bounded together"""
 
+    if len(pieces) == 0:
+        return 0
     bound_value = 0
     for piece in pieces:
         for change in NEIGHBOR:
             neigh = [piece[0] + change[0], piece[1] + change[1]]
             if neigh in pieces:
                 bound_value += 1
-    return bound_value
+    return bound_value/len(pieces)
 
 
 def can_exit(state, colour):
@@ -173,6 +163,14 @@ def side(state, colour):
                     side_value += 1
     return side_value
 
+
+def desti(state, colour):
+    """Return if there is a piece in the destination"""
+
+    for piece in state.pieces_dic[colour]:
+        if piece in state.desti_dic[colour]:
+            return True
+    return False
 
 
 

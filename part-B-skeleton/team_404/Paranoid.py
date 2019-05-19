@@ -1,4 +1,4 @@
-from your_team_name.evaluate import *
+from team_404.evaluate import *
 
 
 class Paranoid:
