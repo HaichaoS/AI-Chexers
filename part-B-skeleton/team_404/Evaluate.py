@@ -16,11 +16,11 @@ class Evaluate:
         self.colour = colour
         self.state = state
         self.eat_weight = 100
-        self.exit_weight = 200
+        self.exit_weight = 50
         self.dist_weight = 10
         self.bound_weight = 1
         self.avoid_weight = 0.01
-        self.side_weight = 0.01
+        self.side_weight = 0.1
         self.danger_weight = 80
 
     def evaluate_create(self, state, colour):
@@ -60,12 +60,11 @@ class Evaluate:
         bound_value = bound(pieces)
         exit_value = can_exit(state, colour)
         side_value = side(state, colour)
-        in_desti = desti(state, colour)
         danger_value = danger(state, colour)
 
         value = eat * self.eat_weight - pieces_distance * self.dist_weight \
-            + exit_value * self.exit_weight + side_value * self.side_weight + \
-            bound_value * self.bound_weight - danger_value * self.danger_weight
+            + exit_value * self.exit_weight + bound_value * self.bound_weight \
+            - danger_value * self.danger_weight + side_value * self.side_weight
 
         # Get evaluation value in different situations and return value:
         # if ((state.action == "EXIT") or in_desti) and exit_value:
@@ -172,16 +171,17 @@ def side(state, colour):
     return side_value / len(state.pieces_dic[colour])
 
 
-def desti(state, colour):
-    """Return if there is a piece in the destination"""
-
-    for piece in state.pieces_dic[colour]:
-        if piece in state.desti_dic[colour]:
-            return True
-    return False
+# def desti(state, colour):
+#     """Return if there is a piece in the destination"""
+#
+#     for piece in state.pieces_dic[colour]:
+#         if piece in state.desti_dic[colour]:
+#             return True
+#     return False
 
 
 def danger(state, colour):
+    """Return how many opponent can eat our pieces in next round"""
 
     danger_value = 0
     for opponent in state.pieces_dic.keys():

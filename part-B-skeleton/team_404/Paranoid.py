@@ -2,6 +2,9 @@ from team_404.Evaluate import *
 
 
 class Paranoid:
+    """Paranoid agent used to tried analyze state and generate best move
+    Compared to Max n it has its weakness therefore abandoned.
+    NOT USED MAY HAVE ERROR RUNNING"""
 
     def __init__(self, colour, depth, state):
         'create a new state'
