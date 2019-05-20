@@ -49,13 +49,6 @@ class ExamplePlayer:
         """
         # TODO: Decide what action to take.
 
-        # elif (len(self.state.pieces) <= 2) and \
-        #     (self.state.exit_value + len(self.state.pieces) < 4):
-        #     if len(self.state.enemy1_pieces) > len(self.state.enemy2_pieces):
-        #         action = defend(self.state, self.state.enemy1_colour)
-        #     else:
-        #         action = defend(self.state, self.state.enemy2_colour)
-
         if len(self.state.pieces_dic[self.colour]) == 0:
             return ("PASS", None)
 
@@ -116,7 +109,6 @@ class ExamplePlayer:
                 self.state.pieces_dic[colour].remove(exit_piece)
                 self.state.exit_dic[colour] += 1
 
-        print("exit:", self.state.exit_dic[colour])
 
 
 

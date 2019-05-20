@@ -5,7 +5,8 @@ class State:
         Also includes the action that turn it into the current state."""
 
     def __init__(self, pieces, desti):
-        'create a new state'
+        """create a new state"""
+
         self.pieces = pieces
         self.desti = desti
         self.enemy1 = None
@@ -14,3 +15,4 @@ class State:
         self.before = None
         self.after = None
         self.action = None
+

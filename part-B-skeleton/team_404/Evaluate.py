@@ -17,10 +17,11 @@ class Evaluate:
         self.state = state
         self.eat_weight = 100
         self.exit_weight = 200
-        self.dist_weight = 1
-        self.bound_weight = 10
+        self.dist_weight = 10
+        self.bound_weight = 1
         self.avoid_weight = 0.01
         self.side_weight = 0.01
+        self.danger_weight = 80
 
     def evaluate_create(self, state, colour):
         """When first evaluate in third depth, create dictionary to store evaluation
@@ -60,23 +61,28 @@ class Evaluate:
         exit_value = can_exit(state, colour)
         side_value = side(state, colour)
         in_desti = desti(state, colour)
+        danger_value = danger(state, colour)
+
+        value = eat * self.eat_weight - pieces_distance * self.dist_weight \
+            + exit_value * self.exit_weight + side_value * self.side_weight + \
+            bound_value * self.bound_weight - danger_value * self.danger_weight
 
         # Get evaluation value in different situations and return value:
-        if ((state.action == "EXIT") or in_desti) and exit_value:
-            value = eat * self.eat_weight - pieces_distance * self.dist_weight\
-                    + exit_value * self.exit_weight + avoid_distance * \
-                    self.avoid_weight + side_value * self.side_weight + \
-                    bound_value * self.bound_weight
-            print("USE VALUE 1")
-        elif (exit_value < 0) and (avoid_distance > 2):
-            value = eat * self.eat_weight + pieces_distance * self.dist_weight\
-                    + bound_value * self.bound_weight + side_value * self.side_weight
-            print("USE VALUE 2")
-        else:
-            value = eat * self.eat_weight - pieces_distance * self.dist_weight\
-                    + exit_value * self.exit_weight + bound_value * self.bound_weight\
-                    + side_value * self.side_weight
-            print("USE VALUE 3")
+        # if ((state.action == "EXIT") or in_desti) and exit_value:
+        #     value = eat * self.eat_weight - pieces_distance * self.dist_weight\
+        #             + exit_value * self.exit_weight + avoid_distance * \
+        #             self.avoid_weight + side_value * self.side_weight + \
+        #             bound_value * self.bound_weight
+        #     # print("USE VALUE 1")
+        # elif (exit_value < 0) and (avoid_distance > 2):
+        #     value = eat * self.eat_weight + pieces_distance * self.dist_weight\
+        #             + bound_value * self.bound_weight + side_value * self.side_weight
+        #     # print("USE VALUE 2")
+        # else:
+        #     value = eat * self.eat_weight - pieces_distance * self.dist_weight\
+        #             + exit_value * self.exit_weight + bound_value * self.bound_weight\
+        #             + side_value * self.side_weight
+        #     # print("USE VALUE 3")
         return value
 
 
@@ -117,7 +123,7 @@ def heuristic(pieces, desti, exit_value):
 def eater(state, colour):
     """Return the value our own pieces (including exit pieces)"""
 
-    return len(state.pieces_dic[colour]) + state.exit_dic[colour] - 12
+    return len(state.pieces_dic[colour]) + state.exit_dic[colour]
 
 
 def bound(pieces):
@@ -149,6 +155,8 @@ def side(state, colour):
     """Return a relative side value to make pieces get higher marks at the
     sides of the board, especially at the corner since it safer"""
 
+    if len(state.pieces_dic[colour]) == 0:
+        return 0
     side_value = 0
     for piece in state.pieces_dic[colour]:
         if (piece[0] == -3) or (piece[0] == 3):
@@ -161,7 +169,7 @@ def side(state, colour):
             if colour != board_colour:
                 if piece in state.desti_dic[board_colour]:
                     side_value += 1
-    return side_value
+    return side_value / len(state.pieces_dic[colour])
 
 
 def desti(state, colour):
@@ -171,6 +179,26 @@ def desti(state, colour):
         if piece in state.desti_dic[colour]:
             return True
     return False
+
+
+def danger(state, colour):
+
+    danger_value = 0
+    for opponent in state.pieces_dic.keys():
+        dangerous = 0
+        if opponent != colour:
+            for piece in state.pieces_dic[colour]:
+                for change in NEIGHBOR:
+                    new_piece = [piece[0] + change[0], piece[1] + change[1]]
+                    if new_piece in state.pieces_dic[opponent]:
+                        opposite_piece = [piece[0] - change[0], piece[1] - change[1]]
+                        if not piece_in_board(opposite_piece):
+                            continue
+                        if opposite_piece not in get_all_pieces(state):
+                            dangerous = 1
+        if dangerous == 1:
+            danger_value += 1
+    return danger_value
 
 
 

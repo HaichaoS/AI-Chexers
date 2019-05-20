@@ -5,7 +5,7 @@ Authors: Haichao Song, Haolin Zhou
 """
 
 
-from team_404.evaluate import *
+from team_404.Evaluate import *
 
 
 class Maxn:

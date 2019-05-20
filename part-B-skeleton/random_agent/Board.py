@@ -1,10 +1,14 @@
 from random_agent.State import State
+
+
 class Board(object):
+
     def __init__(self):
         self=self
 
     def get_all_actions(self,player,state):
         """Return a list of neighbouring states."""
+
         desti = player.desti
         pieces = player.pieces
         blocks = state.enemy1.pieces + state.enemy2.pieces
@@ -50,7 +54,7 @@ class Board(object):
                 new_state.after = new_piece.copy()
                 new_state.parent = state
                 new_state.action = action
-                if(action!=None):
+                if action is not None:
                     next_state.append(new_state)
 
         return next_state
@@ -58,6 +62,7 @@ class Board(object):
 
 def piece_in_board(piece):
     """Check whether the piece is contained in the board."""
+
     piece_z = - piece[0] - piece[1]
     if piece[0] < -3 or piece[0] > 3:
         return False

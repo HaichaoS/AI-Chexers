@@ -1,4 +1,4 @@
-import random_agent.board as board
+import random_agent.Board as board
 from random import randrange
 from random_agent.State import State
 
@@ -246,7 +246,7 @@ def alphabeta_search(state, game):
             beta = min(beta, v)
         return v
 
-    # Body of alphabeta_search:
+    # Body of alpha beta_search:
     best_score = -infinity
     beta = infinity
     best_action = None
@@ -256,3 +256,4 @@ def alphabeta_search(state, game):
             best_score = v
             best_action = a
     return best_action
+

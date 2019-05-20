@@ -1,4 +1,4 @@
-from team_404.evaluate import *
+from team_404.Evaluate import *
 
 
 class Paranoid:
@@ -11,13 +11,11 @@ class Paranoid:
 
     def alphabeta(self, state, depth, colour, alpha, beta):
 
-        return_state = None
-        curr_depth = depth
+        # return_state = None
+        # curr_depth = depth
         curr_player = state.colour
 
-        result = evaluate_create(state, colour)
-        # print(colour, state.pieces, result)
-        # print(depth, colour, result)
+        result = self.evaluate_create(state, colour)
         children = get_next_state(state)
 
         if (len(state.pieces) == 0) or (depth <= 0):
