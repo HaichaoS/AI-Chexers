@@ -4,7 +4,6 @@ Solution to Project Part B: Playing the Game
 Authors: Haichao Song, Haolin Zhou
 """
 
-
 from greedy_agent.Evaluate import *
 from greedy_agent.State import *
 

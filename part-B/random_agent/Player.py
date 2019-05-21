@@ -2,18 +2,16 @@ import random_agent.Board as board
 from random import randrange
 from random_agent.State import State
 
-infinity = float('inf')
-
 class ExamplePlayer:
     def __init__(self, colour):
         """
         This method is called once at the beginning of the game to initialise
         your player. You should use this opportunity to set up your own internal
-        representation of the game state, and any other information about the 
+        representation of the game state, and any other information about the
         game state you would like to maintain for the duration of the game.
 
-        The parameter colour will be a string representing the player your 
-        program will play as (Red, Green or Blue). The value will be one of the 
+        The parameter colour will be a string representing the player your
+        program will play as (Red, Green or Blue). The value will be one of the
         strings "red", "green", or "blue" correspondingly.
         """
         # TODO: Set up state representation.
@@ -49,13 +47,13 @@ class ExamplePlayer:
 
     def action(self):
         """
-        This method is called at the beginning of each of your turns to request 
+        This method is called at the beginning of each of your turns to request
         a choice of action from your program.
 
-        Based on the current state of the game, your player should select and 
-        return an allowed action to play on this turn. If there are no allowed 
-        actions, your player must return a pass instead. The action (or pass) 
-        must be represented based on the above instructions for representing 
+        Based on the current state of the game, your player should select and
+        return an allowed action to play on this turn. If there are no allowed
+        actions, your player must return a pass instead. The action (or pass)
+        must be represented based on the above instructions for representing
         actions.
         """
         # TODO: Decide what action to take.
@@ -74,20 +72,20 @@ class ExamplePlayer:
 
     def update(self, colour, action):
         """
-        This method is called at the end of every turn (including your player’s 
-        turns) to inform your player about the most recent action. You should 
-        use this opportunity to maintain your internal representation of the 
+        This method is called at the end of every turn (including your player’s
+        turns) to inform your player about the most recent action. You should
+        use this opportunity to maintain your internal representation of the
         game state and any other information about the game you are storing.
 
         The parameter colour will be a string representing the player whose turn
-        it is (Red, Green or Blue). The value will be one of the strings "red", 
+        it is (Red, Green or Blue). The value will be one of the strings "red",
         "green", or "blue" correspondingly.
 
-        The parameter action is a representation of the most recent action (or 
+        The parameter action is a representation of the most recent action (or
         pass) conforming to the above in- structions for representing actions.
 
-        You may assume that action will always correspond to an allowed action 
-        (or pass) for the player colour (your method does not need to validate 
+        You may assume that action will always correspond to an allowed action
+        (or pass) for the player colour (your method does not need to validate
         the action/pass against the game rules).
         """
         # TODO: Update state representation in response to action.
@@ -155,105 +153,3 @@ def find_jump_over(parent, kid):
         return (parent[0],parent[1]+1)
     elif(y==2):
         return (parent[0],parent[1]-1)
-
-def maxN(node, agents, d, maxDepth):
-    """Returns best action and corresponding tuple as given by the max-n
-    algorithm for the current node.
-
-    :node: the current node.
-    :returns: returns a tuple (bestAction, bestValue) where bestValue is a
-    tuple of values (one for each player).
-    """
-    player = agents[node.whosTurn]
-    if node.isFinalState():
-        places = [5*node.numPlayers - node.finished.index(i)
-                  for i in xrange(node.numPlayers)]
-        return ((0, -1), places)
-    # if at max depth, see which move minimizes cards remaining
-    if d >= maxDepth:
-        bestAct = (0, -1)
-        bestVal = [heuristic(node, p) for p in agents]
-        for act in player.getAllActions(node):
-            child = node.getChild(act)
-            childVal = [heuristic(node, p) for p in agents]
-            if childVal[player.idx] > bestVal[player.idx]:
-                bestAct = act
-                bestVal = childVal
-        return bestAct, bestVal
-    # otherwise, continue to recurse down the tree
-    bestAct = (0, -1)
-    bestVal = tuple(-float('inf') for i in xrange(node.numPlayers))
-    actions = player.getAllActions(node)
-    for act in player.getAllActions(node):
-        child = node.getChild(act)
-        childAct, childVal = maxN(child, agents, d+1, maxDepth)
-        if childVal[player.idx] > bestVal[player.idx]:
-            bestAct = act
-            bestVal = childVal
-    return bestAct, bestVal
-
-def minimax_decision(state, game):
-    """Given a state in a game, calculate the best move by searching
-    forward all the way to the terminal states. [Figure 5.3]"""
-
-    player = game.to_move(state)
-
-    def max_value(state):
-        if game.terminal_test(state):
-            return game.utility(state, player)
-        v = -infinity
-        for a in game.actions(state):
-            v = max(v, min_value(game.result(state, a)))
-        return v
-
-    def min_value(state):
-        if game.terminal_test(state):
-            return game.utility(state, player)
-        v = -infinity
-        for a in game.actions(state):
-            v = min(v, max_value(game.result(state, a)))
-        return v
-
-    # Body of minimax_decision:
-    return numpy.argmax(game.actions(state),
-                        key=lambda a: min_value(game.result(state, a)))
-def alphabeta_search(state, game):
-    """Search game to determine best action; use alpha-beta pruning.
-    As in [Figure 5.7], this version searches all the way to the leaves."""
-
-    player = game.to_move(state)
-
-    # Functions used by alphabeta
-    def max_value(state, alpha, beta):
-        if game.terminal_test(state):
-            return game.utility(state, player)
-        v = -infinity
-        for a in game.actions(state):
-            v = max(v, min_value(game.result(state, a), alpha, beta))
-            if v >= beta:
-                return v
-            alpha = max(alpha, v)
-        return v
-
-    def min_value(state, alpha, beta):
-        if game.terminal_test(state):
-            return game.utility(state, player)
-        v = infinity
-        for a in game.actions(state):
-            v = min(v, max_value(game.result(state, a), alpha, beta))
-            if v <= alpha:
-                return v
-            beta = min(beta, v)
-        return v
-
-    # Body of alpha beta_search:
-    best_score = -infinity
-    beta = infinity
-    best_action = None
-    for a in game.actions(state):
-        v = min_value(game.result(state, a), best_score, beta)
-        if v > best_score:
-            best_score = v
-            best_action = a
-    return best_action
-

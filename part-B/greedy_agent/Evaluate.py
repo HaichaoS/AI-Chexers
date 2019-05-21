@@ -1,3 +1,8 @@
+"""
+COMP30024 Artificial Intelligence, Semester 1 2019
+Solution to Project Part B: Playing the Game
+Authors: Haichao Song, Haolin Zhou
+"""
 
 COLOURS = ["red", "green", "blue"]
 

@@ -15,4 +15,3 @@ class State:
         self.before = None
         self.after = None
         self.action = None
-

@@ -70,7 +70,8 @@ class Evaluate:
         else:
             value = eat * self.eat_weight - pieces_distance * self.dist_weight
 
-        # Get evaluation value in different situations and return value:
+        # Get evaluation value in different situations and calculate in different ways:
+        # NOT USED NOW
         # if ((state.action == "EXIT") or in_desti) and exit_value:
         #     value = eat * self.eat_weight - pieces_distance * self.dist_weight\
         #             + exit_value * self.exit_weight + avoid_distance * \
