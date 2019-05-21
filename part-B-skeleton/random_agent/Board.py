@@ -63,7 +63,7 @@ class Board(object):
 def piece_in_board(piece):
     """Check whether the piece is contained in the board."""
 
-    piece_z = - piece[0] - piece[1]
+    piece_z = piece[0] + piece[1]
     if piece[0] < -3 or piece[0] > 3:
         return False
     if piece[1] < -3 or piece[1] > 3:

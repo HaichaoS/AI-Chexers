@@ -16,12 +16,12 @@ class Evaluate:
         self.colour = colour
         self.state = state
         self.eat_weight = 100
-        self.exit_weight = 50
+        self.exit_weight = 70
         self.dist_weight = 10
         self.bound_weight = 1
-        self.avoid_weight = 0.01
-        self.side_weight = 0.1
-        self.danger_weight = 80
+        self.side_weight = 0.01
+        self.danger_colour_weight = 60
+        self.danger_pieces_weight = 5
 
     def evaluate_create(self, state, colour):
         """When first evaluate in third depth, create dictionary to store evaluation
@@ -56,15 +56,19 @@ class Evaluate:
         # Calculate different factors
         pieces_distance = heuristic(pieces, state.desti_dic[colour], state.exit_dic[colour])
         eat = eater(state, colour)
-        avoid_distance = heuristic(pieces, enemy_pieces, state.exit_dic[colour])
+        # avoid_distance = heuristic(pieces, enemy_pieces, state.exit_dic[colour])
         bound_value = bound(pieces)
         exit_value = can_exit(state, colour)
         side_value = side(state, colour)
-        danger_value = danger(state, colour)
-
-        value = eat * self.eat_weight - pieces_distance * self.dist_weight \
-            + exit_value * self.exit_weight + bound_value * self.bound_weight \
-            - danger_value * self.danger_weight + side_value * self.side_weight
+        danger_colour_value = danger_colour(state, colour)
+        danger_pieces_value = danger_pieces(state, colour)
+        if colour == state.colour:
+            value = eat * self.eat_weight - pieces_distance * self.dist_weight \
+                    + exit_value * self.exit_weight + bound_value * self.bound_weight \
+                    - danger_colour_value * self.danger_colour_weight + side_value * \
+                    self.side_weight - danger_pieces_value * self.danger_pieces_weight
+        else:
+            value = eat * self.eat_weight - pieces_distance * self.dist_weight
 
         # Get evaluation value in different situations and return value:
         # if ((state.action == "EXIT") or in_desti) and exit_value:
@@ -92,31 +96,31 @@ def heuristic(pieces, desti, exit_value):
     exit pieces). """
 
     total_heur = 0
-    if (len(pieces) == 0) or (len(desti) == 0):
-        return 0
-    else:
-        pieces_distance = []
-        for piece in pieces:
-            heur_list = []
-            for end in desti:
-                piece_z = - piece[0] - piece[1]
-                end_z = - end[0] - end[1]
-                heur_list.append((abs(piece[0] - end[0]) + abs(piece[1] - end[1]) +
-                                  abs(piece_z - end_z)) / 2 + 1)
-            if len(heur_list) > 0:
-                pieces_distance.append(min(heur_list))
+    if len(pieces) == 0 and (exit_value < 4):
+        return float("inf")
 
-        if (len(pieces) + exit_value) <= 4:
-            for value in pieces_distance:
-                total_heur += value
-            return total_heur/len(pieces_distance)
-        elif exit_value == 4:
-            return 0
-        else:
-            for i in range(4-exit_value):
-                total_heur += min(pieces_distance)
-                pieces_distance.remove(min(pieces_distance))
-            return total_heur/(4-exit_value)
+    pieces_distance = []
+    for piece in pieces:
+        heur_list = []
+        for end in desti:
+            piece_z = - piece[0] - piece[1]
+            end_z = - end[0] - end[1]
+            heur_list.append((abs(piece[0] - end[0]) + abs(piece[1] - end[1]) +
+                              abs(piece_z - end_z)) / 2 + 1)
+        if len(heur_list) > 0:
+            pieces_distance.append(min(heur_list))
+
+    if (len(pieces) + exit_value) < 4:
+        for value in pieces_distance:
+            total_heur += value
+        return total_heur/len(pieces_distance)
+    elif exit_value == 4:
+        return float("-inf")
+    else:
+        for i in range(4-exit_value):
+            total_heur += min(pieces_distance)
+            pieces_distance.remove(min(pieces_distance))
+        return total_heur/(4-exit_value)
 
 
 def eater(state, colour):
@@ -155,7 +159,7 @@ def side(state, colour):
     sides of the board, especially at the corner since it safer"""
 
     if len(state.pieces_dic[colour]) == 0:
-        return 0
+        return float("-inf")
     side_value = 0
     for piece in state.pieces_dic[colour]:
         if (piece[0] == -3) or (piece[0] == 3):
@@ -171,16 +175,7 @@ def side(state, colour):
     return side_value / len(state.pieces_dic[colour])
 
 
-# def desti(state, colour):
-#     """Return if there is a piece in the destination"""
-#
-#     for piece in state.pieces_dic[colour]:
-#         if piece in state.desti_dic[colour]:
-#             return True
-#     return False
-
-
-def danger(state, colour):
+def danger_colour(state, colour):
     """Return how many opponent can eat our pieces in next round"""
 
     danger_value = 0
@@ -199,6 +194,25 @@ def danger(state, colour):
         if dangerous == 1:
             danger_value += 1
     return danger_value
+
+
+def danger_pieces(state, colour):
+    """Return how many pieces are exposed to opponents in nest round"""
+
+    danger_pieces_value = 0
+    for piece in state.pieces_dic[colour]:
+        dangerous = 0
+        for change in NEIGHBOR:
+            new_piece = [piece[0] + change[0], piece[1] + change[1]]
+            if (new_piece in get_all_pieces(state)) and (new_piece not in state.pieces_dic[colour]):
+                opposite_piece = [piece[0] - change[0], piece[1] - change[1]]
+                if not piece_in_board(opposite_piece):
+                    continue
+                if opposite_piece not in get_all_pieces(state):
+                    dangerous = 1
+        if dangerous == 1:
+            danger_pieces_value += 1
+    return danger_pieces_value
 
 
 
